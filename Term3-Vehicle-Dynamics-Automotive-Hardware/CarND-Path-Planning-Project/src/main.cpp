@@ -204,7 +204,7 @@ int main() {
 	// initialize lane
 	int lane = 1;
 	// Define max velocity for the highway
-	double ref_vel = 49.5; // mph
+	double ref_vel = 0; // mph
 
   h.onMessage([&ref_vel,&map_waypoints_x,&map_waypoints_y,&map_waypoints_s,&map_waypoints_dx,&map_waypoints_dy,&lane](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length,
                      uWS::OpCode opCode) {
@@ -273,9 +273,19 @@ int main() {
 								if((check_car_s > car_s) && ((check_car_s - car_s) < 30))
 								{
 									// take action if our car in the future is within 30ms of the car in front.
-									ref_vel = 29.5;
+									//ref_vel = 29.5;
+									too_close = true;
 								}
 							}
+						}
+
+						if(too_close)
+						{
+							ref_vel -= .224;
+						}
+						else if(ref_vel < 49.5)
+						{
+							ref_vel += .224;
 						}
 
 						vector<double> spline_ptsx;
