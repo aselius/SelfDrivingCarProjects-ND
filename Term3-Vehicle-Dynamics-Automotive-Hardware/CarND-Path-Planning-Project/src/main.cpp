@@ -249,6 +249,35 @@ int main() {
 
           	// TODO: define a path made up of (x,y) points that the car will visit sequentially every .02 seconds
 
+						if(prev_size > 0)
+						{
+							car_s = end_path_s;
+						}
+
+						bool too_close = false;
+
+						for(int i = 0; i < sensor_fusion.size(); i++)
+						{
+							float d = sensor_fusion[i][6];
+							// check if a car is in my lane
+							if(d < (2+4*lane+2) && d > (2+4*lane-2))
+							{
+								double vx = sensor_fusion[i][3];
+								double vy = sensor_fusion[i][4];
+								double check_speed = sqrt(vx*vx + vy*vy);
+								double check_car_s = sensor_fusion[i][5];
+
+								// if using the previous points, we can project s value outwards in time
+								check_car_s += ((double)prev_size*.02*check_speed);
+
+								if((check_car_s > car_s) && ((check_car_s - car_s) < 30))
+								{
+									// take action if our car in the future is within 30ms of the car in front.
+									ref_vel = 29.5;
+								}
+							}
+						}
+
 						vector<double> spline_ptsx;
 						vector<double> spline_ptsy;
 
