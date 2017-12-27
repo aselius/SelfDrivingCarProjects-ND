@@ -273,8 +273,14 @@ int main() {
 								if((check_car_s > car_s) && ((check_car_s - car_s) < 30))
 								{
 									// take action if our car in the future is within 30ms of the car in front.
-									//ref_vel = 29.5;
+									/*
 									too_close = true;
+									if(lane > 0)
+									{
+										lane = 0;
+									}
+									*/
+									//TODO: Do something similar here with LN273 to check if it is safe to shift lane
 								}
 							}
 						}
