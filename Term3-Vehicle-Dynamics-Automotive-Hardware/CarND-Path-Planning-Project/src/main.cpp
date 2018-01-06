@@ -270,11 +270,13 @@ int main() {
 
             // define a maximum distance before a car makes a decision
             double max_threshold_for_distance_ahead = 30;
+            double max_threshold_for_distance_behind = 15;
 
             cout << "currently in lane: " << lane << endl;
 
             for(int i = 0; i < sensor_fusion.size(); i++)
             {
+              double index = sensor_fusion[i][0];
               double vx = sensor_fusion[i][3];
               double vy = sensor_fusion[i][4];
               double check_speed = sqrt(vx*vx + vy*vy);
@@ -285,26 +287,30 @@ int main() {
               check_car_s += ((double)prev_size*.02*check_speed);
               // check if a car is within the range that I care about around my car.
               bool car_ahead = check_car_s > car_s;
-              bool car_nearby = (check_car_s - car_s < max_threshold_for_distance_ahead && car_ahead);
+              bool car_behind = car_s > check_car_s;
+              bool car_nearby_ahead = (check_car_s - car_s < max_threshold_for_distance_ahead and car_ahead);
+              bool car_nearby_behind = (car_s - check_car_s < max_threshold_for_distance_behind and car_behind);
+              bool car_nearby = car_nearby_ahead or car_nearby_behind;
 
               // if nearby, change the status and available action for my car at this cycle.
+
               if(car_nearby)
               {
                 // if there is a car nearby in front of us, turn on too close state. If lane left of us, disable left turn, and ditto for lane right of us.
-                if(check_car_lane == lane && car_ahead)
+                if(check_car_lane == lane and car_ahead)
                 {
-                  cout << "too close to car in front at lane: " << check_car_lane << endl;
+                  cout << "AHEAD WARNING : car " << index << " is at d value of " << d << " predicted to be in lane " << check_car_lane << " at predicted s value of " << check_car_s << " which can be compared to the sdc s value of " << car_s << " and sdc d value of " << car_d << " at lane " << lane << endl;
                   cout << " your car lane is: " << lane << endl;
                   too_close = true;
                 }
                 else if(check_car_lane == (lane - 1))
                 {
-                  cout << "don't change to left. car_lane: " << check_car_lane << endl;
+                  cout << "LEFT WARNING : car " << index << " is at d value of " << d << " predicted to be in lane " << check_car_lane << " at predicted s value of " << check_car_s << " which can be compared to the sdc s value of " << car_s << " and sdc d value of " << car_d << " at lane " << lane << endl;
                   change_lane_left = false;
                 }
                 else if(check_car_lane == (lane + 1))
                 {
-                  cout << "don't change to right. car_lane: " << check_car_lane << endl;
+                  cout << "RIGHT WARNING : car " << index << " is at d value of " << d << " predicted to be in lane " << check_car_lane << " at predicted s value of " << check_car_s << " which can be compared to the sdc s value of " << car_s << " and sdc d value of " << car_d << " at lane " << lane << endl;
                   change_lane_right = false;
                 }
               }
