@@ -1,6 +1,26 @@
 # CarND-Path-Planning-Project
 Self-Driving Car Engineer Nanodegree Program
-   
+
+### Model Documentation.
+This path planning model builds off of the simple path planning model outlined in the Q&A that simply make a fixed turn to one single direction if it detects a car ahead, without worrying about collision while the car is preparing and making the turn to change lanes.
+
+> The path planning module built from the Q&A utilizes calculating future way points and using spline to calculate a trajectory. It also implements lanes utilizing Frenet coordinates.
+
+The model was expanded upon by forcing the vehicle to always track the status of its current, left, and right lanes at all times. The status indicators are:
+
+1. car_ahead - this is the status to determine if the vehicle should slow down, as there is a car in my lane that's too close (just in my lane)
+2. car_nearby - this is the status to track if there is a vehicle nearby regardless a lane to determine if it's safe for me to make a turn.
+
+Initially, I only defined "nearby" with a threshold that only detected if a car was ahead, but this caused a lot of issues when you wanted to take a turn and there was a car accelerating behind in the lane I was turning to. So, I added a threshold for vehicles behind of the self driving car, and incorporated that into a wholistic "nearby" variable.
+
+Then depending on where the vehicle is in the for loop that iterates through all the vehicles in the waypoints, it tracks and changes the following variables
+
+1. too_close - if the car in my lane is "near_by" and "ahead"
+2. change_lane_left - if a car is in my left lane and is "nearby", then this behavior is not allowed
+3. change_lane_right - if a car is in my right lane and is "nearby", then this behaviro is not allowed.
+
+Then with these boolean statuses monitored every cycle, new trajectories are created by spline and added to the existing trajectory.
+
 ### Simulator.
 You can download the Term3 Simulator which contains the Path Planning Project from the [releases tab (https://github.com/udacity/self-driving-car-sim/releases).
 
