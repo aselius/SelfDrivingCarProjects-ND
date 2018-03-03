@@ -2,6 +2,37 @@
 ### Introduction
 In this project, you'll label the pixels of a road in images using a Fully Convolutional Network (FCN).
 
+This used the architecture described [here](https://people.eecs.berkeley.edu/~jonlong/long_shelhamer_fcn.pdf)
+
+Training loss results for 20 epochs.
+```
+Epoch 0 / 20 Training loss: 0.8089
+Epoch 1 / 20 Training loss: 0.6237
+Epoch 2 / 20 Training loss: 0.5588
+Epoch 3 / 20 Training loss: 0.4743
+Epoch 4 / 20 Training loss: 0.3573
+Epoch 5 / 20 Training loss: 0.2646
+Epoch 6 / 20 Training loss: 0.2426
+Epoch 7 / 20 Training loss: 0.1889
+Epoch 8 / 20 Training loss: 0.1629
+Epoch 9 / 20 Training loss: 0.1876
+Epoch 10 / 20 Training loss: 0.1172
+Epoch 11 / 20 Training loss: 0.1914
+Epoch 12 / 20 Training loss: 0.1781
+Epoch 13 / 20 Training loss: 0.1377
+Epoch 14 / 20 Training loss: 0.1490
+Epoch 15 / 20 Training loss: 0.1577
+Epoch 16 / 20 Training loss: 0.0980
+Epoch 17 / 20 Training loss: 0.1010
+Epoch 18 / 20 Training loss: 0.0874
+Epoch 19 / 20 Training loss: 0.1034
+```
+Some sample images from the result are:
+
+![Sample image 1](./assets/sample1.png)
+![Sample image 2](./assets/sample2.png)
+![Sample image 3](./assets/sample3.png)
+
 ### Setup
 ##### Frameworks and Packages
 Make sure you have the following is installed:
