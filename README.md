@@ -1,5 +1,3 @@
 # Projects from Udacity Self Driving Car Nanodegree
 
-**Read me WIP**
-
-I am actually pondering whether or not I want to retain the commit history for the projects.. In the meantime (aside from P1 I have already deleted... woops) I will be keeping this and all the other repos starting with SDC in place.
+Holds all the projects I've done for the Self Driving Car Nanodegree. All the git history has been removed for the sake of just not having 50 repos in my profile.
